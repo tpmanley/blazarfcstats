@@ -2,7 +2,7 @@ import os
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="")
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///stats.db')
 db = SQLAlchemy(app)
 
@@ -14,8 +14,8 @@ class Player(db.Model):
 
 
 @app.route('/')
-def hello():
-    return 'Hello World!'
+def index():
+    return app.send_static_file('index.html')
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
