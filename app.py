@@ -14,7 +14,7 @@ class Player(db.Model):
     goals = db.Column(db.Integer, default=0)
 
 api_manager = APIManager(app, flask_sqlalchemy_db=db)
-api_manager.create_api(Player, methods=['GET', 'POST'])
+api_manager.create_api(Player, methods=['GET', 'PUT'])
 
 
 @app.route('/')
