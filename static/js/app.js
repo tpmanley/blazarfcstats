@@ -3,9 +3,24 @@ function addGoal(id, goals) {
         url: "/api/player/" + id,
         type: "PUT",
         data: JSON.stringify({"goals": goals + 1}),
-        contentType: "application/json"
+        contentType: "application/json",
+        'success': updateStats
     });
-    updateStats();
+}
+
+function resetGoals() {
+    $.getJSON("/api/player", function(data){
+        var items = [];
+        $.each(data.objects, function(i, v) {
+            $.ajax({
+                url: "/api/player/" + v["id"],
+                type: "PUT",
+                data: JSON.stringify({"goals": 0}),
+                contentType: "application/json",
+                'success': updateStats
+            });
+        });
+    });
 }
 
 function updateStats() {
