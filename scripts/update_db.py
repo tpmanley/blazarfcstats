@@ -12,12 +12,14 @@ def update_db():
             Player(
                 id=1,
                 name="Tom Manley",
+                goals=0,
             )
         )
         session.merge(
             Player(
                 id=2,
                 name="Peter Yamashiro",
+                goals=0,
             )
         )
         session.commit()
