@@ -24,7 +24,8 @@ function resetGoals() {
 }
 
 function updateStats() {
-    $.getJSON("/api/player", function(data){
+    order_by = [{"field":"name", "direction":"asc"}];
+    $.getJSON("/api/player", {"q":JSON.stringify({"order_by":order_by})}, function(data){
         var items = [];
         $.each(data.objects, function(i, v) {
             console.log(v);
