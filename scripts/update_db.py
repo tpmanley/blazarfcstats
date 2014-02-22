@@ -13,6 +13,7 @@ def update_db():
                 id=1,
                 name="Tom Manley",
                 goals=0,
+                picture="images/tom.manley.jpg"
             )
         )
         session.merge(
@@ -20,6 +21,7 @@ def update_db():
                 id=2,
                 name="Peter Yamashiro",
                 goals=0,
+                picture="images/unknown.jpg"
             )
         )
         session.commit()

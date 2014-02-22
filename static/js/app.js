@@ -30,11 +30,13 @@ function updateStats() {
         $.each(data.objects, function(i, v) {
             console.log(v);
             items.push(
-                "<div class=\"row\">" +
-                    "<div class=\"pname small-2 columns\">" + v["name"] + "</div>" +
-                    "<div class=\"goals small-10 columns\">" +
+                "<div class=\"row text-center\">" +
+                    "<div class=\"pic small-1 columns\">" +
+                        "<img height=50 width=50 src=\"" + v["picture"] + "\"</img>" +
+                    "</div>" +
+                    "<div class=\"goals small-11 columns\">" +
                         "<button onclick=\"addGoal(" + v["id"] + "," + v["goals"] + ")\" class=\"button expand\">" +
-                            v["goals"] +
+                            v["name"] + " - " + v["goals"] +
                         "</button>" +
                     "</div>" +
                 "</div>");

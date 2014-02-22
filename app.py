@@ -12,6 +12,7 @@ class Player(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, unique=True)
     goals = db.Column(db.Integer, default=0)
+    picture = db.Column(db.Text)
 
 api_manager = APIManager(app, flask_sqlalchemy_db=db)
 api_manager.create_api(Player, methods=['GET', 'PUT'])
