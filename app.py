@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, make_response, render_template
+from flask import Flask, request, make_response, render_template, redirect
 from flask.ext.restless import APIManager
 from flask.ext.sqlalchemy import SQLAlchemy
 from authomatic.providers import oauth2
@@ -56,16 +56,19 @@ def login(provider_name):
         if result.user:
             # We need to update the user to get more info.
             result.user.update()
-
-            fb_pic_url = "https://graph.facebook.com/%s/picture?height=200&type=normal&width=200" % result.user.id
-            response = result.provider.access(fb_pic_url, content_parser=lambda body:body)
-            if response.status == 200:
-                pic_name = result.user.username + ".jpg"
-                with open(os.path.join(os.path.dirname(__file__), 'static', 'images', pic_name), "wb") as f:
-                    f.write(response.data)
+            player = Player.query.filter_by(name=result.user.name).first()
+            if player:
+                fb_pic_url = "https://graph.facebook.com/%s/picture?height=200&type=normal&width=200" % result.user.id
+                response = result.provider.access(fb_pic_url, content_parser=lambda body:body)
+                if response.status == 200:
+                    pic_name = result.user.username + ".jpg"
+                    with open(os.path.join(os.path.dirname(__file__), 'static', 'images', pic_name), "wb") as f:
+                        f.write(response.data)
+                    player.picture = "/images/" + pic_name
+                    db.session.commit()
 
         # The rest happens inside the template.
-        return render_template('index.html', result=result)
+        return redirect('/')
 
     # Don't forget to return the response.
     return response
