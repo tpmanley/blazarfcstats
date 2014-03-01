@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, request, make_response, render_template
 from flask.ext.restless import APIManager
 from flask.ext.sqlalchemy import SQLAlchemy
 
@@ -20,7 +20,7 @@ api_manager.create_api(Player, methods=['GET', 'PUT'])
 
 @app.route('/')
 def index():
-    return app.send_static_file('index.html')
+    return render_template('index.html')
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
