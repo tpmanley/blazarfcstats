@@ -16,7 +16,10 @@ from sqlalchemy.sql import table, column
 
 
 def upgrade():
-    op.drop_table("player")
+    try:
+        op.drop_table("player")
+    except sa.exc.OperationalError:
+        pass  # Table doesn't exist
     op.create_table(
         'player',
         sa.Column('id', sa.Integer, primary_key=True),
