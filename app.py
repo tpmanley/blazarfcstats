@@ -5,6 +5,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from authomatic.providers import oauth2
 from authomatic.adapters import WerkzeugAdapter
 from authomatic import Authomatic
+import requests
 
 CONFIG = {
     'fb': {
@@ -59,11 +60,12 @@ def login(provider_name):
             player = Player.query.filter_by(name=result.user.name).first()
             if player:
                 fb_pic_url = "https://graph.facebook.com/%s/picture?height=200&type=normal&width=200" % result.user.id
-                response = result.provider.access(fb_pic_url, content_parser=lambda body:body)
-                if response.status == 200:
+                response = requests.get(fb_pic_url)
+                if response.status_code == 200:
                     pic_name = result.user.username + ".jpg"
                     with open(os.path.join(os.path.dirname(__file__), 'static', 'images', pic_name), "wb") as f:
-                        f.write(response.data)
+                        for chunk in response.iter_content():
+                            f.write(chunk)
                     player.picture = "/images/" + pic_name
                     db.session.commit()
 
