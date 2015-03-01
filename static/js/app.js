@@ -34,11 +34,13 @@ function updateStats() {
                     "<div class=\"pic small-3 columns\">" +
                         "<img height=50 width=50 src=\"" + v["picture"] + "\"</img>" +
                     "</div>" +
-                    "<div class=\"goals small-9 columns\">" +
-                        "<button onclick=\"addGoal(" + v["id"] + "," + v["goals"] + ")\" class=\"button expand\">" +
-                            v["name"] + " - " + v["goals"] +
-                        "</button>" +
-                    "</div>" +
+                    '<div class="goals small-9 columns">' +
+                        '<ul class="button-group round">' +
+                          '<li><a href="#" class="button"><i class="foundicon-minus"></i></a></li>' +
+                          '<li>' + v["name"] + " - " + v["goals"] + '</li>' +
+                          '<li><a href="#" onclick="addGoal(' + v["id"] + "," + v["goals"] + ')" class="button"><i class="foundicon-plus"></i></a></li>' +
+                        '</ul>' +
+                    '</div>' +
                 "</div>");
         });
     });
