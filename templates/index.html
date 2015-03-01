@@ -9,11 +9,28 @@
     <script src="/bower_components/modernizr/modernizr.js"></script>
 </head>
 <body>
-{% if result and result.user %}
-    Logged in as {{ result.user.name }}
-{% else %}
-    Login with <a href="login/fb">Facebook</a> to update your picture<br />
-{% endif %}
+<nav class="top-bar" data-topbar role="navigation">
+  <ul class="title-area">
+    <li class="name">
+      <h1><a href="#">Blazar FC Stats</a></h1>
+    </li>
+     <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+    <li class="toggle-topbar menu-icon"><a href="#"></a></li>
+  </ul>
+
+  <section class="top-bar-section">
+    <ul class="right">
+      <li>
+          {% if result and result.user %}
+            <a href="#">Signed in as {{ result.user.name }}</a>
+          {% else %}
+            <a href="login/fb">Sign in</a>
+          {% endif %}
+      </li>
+    </ul>
+  </section>
+</nav>
+
 <div class="row">
     <div class="small-12 columns">
         <h1>Blazar FC Stats</h1>
