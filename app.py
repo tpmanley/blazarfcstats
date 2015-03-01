@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, make_response, render_template, redirect
+from flask import Flask, request, make_response, render_template, redirect, session
 from flask.ext.restless import APIManager
 from flask.ext.sqlalchemy import SQLAlchemy
 from authomatic.providers import oauth2
@@ -19,6 +19,7 @@ CONFIG = {
 
 app = Flask(__name__, static_url_path="")
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///stats.db')
+app.secret_key = 'random secret string'
 db = SQLAlchemy(app)
 
 authomatic = Authomatic(CONFIG, 'your secret string', report_errors=False)
@@ -49,7 +50,10 @@ def login(provider_name):
     response = make_response()
 
     # Log the user in, pass it the adapter and the provider name.
-    result = authomatic.login(WerkzeugAdapter(request, response), provider_name)
+    result = authomatic.login(WerkzeugAdapter(request, response),
+                              provider_name,
+                              session=session,
+                              session_saver=lambda: app.save_session(session, response))
 
     # If there is no LoginResult object, the login procedure is still pending.
     if result:
@@ -63,7 +67,7 @@ def login(provider_name):
                 db.session.commit()
 
         # The rest happens inside the template.
-        return redirect('/')
+        return render_template('index.html', result=result)
 
     # Don't forget to return the response.
     return response
