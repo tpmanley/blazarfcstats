@@ -31,10 +31,10 @@ function updateStats() {
             console.log(v);
             items.push(
                 "<div class=\"row text-center\">" +
-                    "<div class=\"pic small-1 columns\">" +
+                    "<div class=\"pic small-3 columns\">" +
                         "<img height=50 width=50 src=\"" + v["picture"] + "\"</img>" +
                     "</div>" +
-                    "<div class=\"goals small-11 columns\">" +
+                    "<div class=\"goals small-9 columns\">" +
                         "<button onclick=\"addGoal(" + v["id"] + "," + v["goals"] + ")\" class=\"button expand\">" +
                             v["name"] + " - " + v["goals"] +
                         "</button>" +
