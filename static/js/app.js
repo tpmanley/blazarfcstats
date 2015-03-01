@@ -26,10 +26,10 @@ function resetGoals() {
 function updateStats() {
     order_by = [{"field":"name", "direction":"asc"}];
     $.getJSON("/api/player", {"q":JSON.stringify({"order_by":order_by})}, function(data){
-        var items = [];
+        $("#stats").empty();
         $.each(data.objects, function(i, v) {
             console.log(v);
-            items.push(
+            $("#stats").append(
                 "<div class=\"row text-center\">" +
                     "<div class=\"pic small-3 columns\">" +
                         "<img height=50 width=50 src=\"" + v["picture"] + "\"</img>" +
@@ -41,7 +41,6 @@ function updateStats() {
                     "</div>" +
                 "</div>");
         });
-        $("#stats").html(items.join(""));
     });
 }
 
