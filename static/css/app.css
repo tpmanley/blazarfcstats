@@ -1,1 +1,25 @@
+ul.players-list {
+    display: block;
+    list-style: none;
+    margin-top: 10px;
+}
 
+
+li {
+    margin-bottom: 10px;
+    min-height: 50px;
+}
+
+
+.pic {
+    width: 50px;
+    margin-right: 10px;
+    float: left;
+}
+
+span.meta{
+    margin-left: 4px;
+    /*font-size: 11px;
+    #color: #bbb;*/
+    padding-right: 10px;
+}

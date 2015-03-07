@@ -8,6 +8,20 @@ function addGoal(id, goals) {
     });
 }
 
+function removeGoal(id, goals) {
+    var new_total = goals - 1;
+    if(new_total < 0) {
+        new_total = 0;
+    }
+    $.ajax({
+        url: "/api/player/" + id,
+        type: "PUT",
+        data: JSON.stringify({"goals": new_total}),
+        contentType: "application/json",
+        'success': updateStats
+    });
+}
+
 function resetGoals() {
     $.getJSON("/api/player", function(data){
         var items = [];
@@ -24,24 +38,17 @@ function resetGoals() {
 }
 
 function updateStats() {
-    order_by = [{"field":"name", "direction":"asc"}];
+    var order_by = [{"field":"name", "direction":"asc"}];
     $.getJSON("/api/player", {"q":JSON.stringify({"order_by":order_by})}, function(data){
-        $("#stats").empty();
+        $("#players-content").empty();
         $.each(data.objects, function(i, v) {
             console.log(v);
-            $("#stats").append(
-                "<div class=\"row text-center\">" +
-                    "<div class=\"pic small-3 columns\">" +
-                        "<img height=50 width=50 src=\"" + v["picture"] + "\"</img>" +
-                    "</div>" +
-                    '<div class="goals small-9 columns">' +
-                        '<ul class="button-group round">' +
-                          '<li><a href="#" class="button"><i class="foundicon-minus"></i></a></li>' +
-                          '<li>' + v["name"] + " - " + v["goals"] + '</li>' +
-                          '<li><a href="#" onclick="addGoal(' + v["id"] + "," + v["goals"] + ')" class="button"><i class="foundicon-plus"></i></a></li>' +
-                        '</ul>' +
-                    '</div>' +
-                "</div>");
+            $("#players-content").append(
+            sprintf('<li><div class="player"><img class="pic" src="%s"</img><p>%s', v["picture"], v["name"]) +
+            sprintf('<br/><span class="meta">%s Goals</span>', v["goals"]) +
+            sprintf('<i class="foundicon-minus" onclick="removeGoal(%s, %s)"></i>', v["id"], v["goals"]) +
+            sprintf('<i class="foundicon-plus" onclick="addGoal(%s, %s)"></i>', v["id"], v["goals"]) +
+            '</div></li>');
         });
     });
 }

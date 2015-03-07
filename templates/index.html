@@ -31,13 +31,10 @@
   </section>
 </nav>
 
-<div class="row">
-    <div class="small-12 columns">
-        <h1>Blazar FC Stats</h1>
+<ul class="players-list">
+    <div id="players-content">
     </div>
-</div>
-<div id="stats">
-</div>
+</ul>
 <div class="row">
     <div class="small-12 columns">
         <button class="button expand alert" onclick="resetGoals()">Reset</button>
@@ -45,6 +42,7 @@
 </div>
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/bower_components/foundation/js/foundation.min.js"></script>
+<script src="/bower_components/sprintf/dist/sprintf.min.js"></script>
 <script src="/js/app.js"></script>
 <script>
     $(document).foundation();
